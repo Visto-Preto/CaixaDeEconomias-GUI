@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+  	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+
+	<title>Caixa de Economias</title>
+</head>
+<body> 
+
+	<nav class="navbar navbar-expand-md bg-primary navbar-dark">
+	  <a class="navbar-brand" href="#"><img src="/static/imgs/logo.png" alt="Logo" style="width:40px;"> Caixa de Economias</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+	    <ul class="navbar-nav">
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">Terminal</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">Configs</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">Sobre</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">Sair</a>
+	      </li>
+	    </ul>
+	  </div>  
+	</nav>
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#home">Saldo</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#deposito">Depositar</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#sacar">Sacar</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#extratos">Extratos</a>
+  </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content ">
+  	<div class="tab-pane container active" id="home">
+
+		<div class="card container p-3 my-3" style="background-color: #e0ffff;">
+			<div class="card-body">
+				<h2><span style="color: #1e90ff; font-weight: bold;">Caixa de Economias</span></h2>
+				<br>
+				<div class="card bg-info text-white">
+	    			<div class="card-body"><p>Valor em conta</p><h2 class="float-right"><span style="color: #008000; font-weight: bold;">{{conta}}</span></span></h2></div>
+	  			</div>
+	  			<br>
+				 <div class="card bg-info text-white">
+	    			<div class="card-body"><p>Ultima movimentação: {{dt}} </p><span style="font-size: 20px; font-weight: bold;">{{ultO}}</span> <span style="color: #008000; font-size: 20px; font-weight: bold;">{{ultC}}</span></div>
+	  			</div>
+	  			<br><br><br><br><br>
+  			</div>
+  		</div>
+
+	</div>
+  	<div class="tab-pane container fade" id="deposito">Area dos Depositos</div>
+  	<div class="tab-pane container fade" id="sacar">Area dos Saques</div>
+   	<div class="tab-pane container fade" id="extratos">Area dos Extratos</div>
+</div>
+<div class="jumbotron bg-primary text-center text-white" style="margin-bottom:0">
+  <p>Caixa de Economias &#169; Visto-Preto 2022</p>
+</div>
+
+</body>
+</html>
