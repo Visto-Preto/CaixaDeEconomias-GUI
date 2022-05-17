@@ -30,7 +30,7 @@
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="#">Sair</a>
-	      </li>
+	      </li>    
 	    </ul>
 	  </div>  
 	</nav>
@@ -73,10 +73,32 @@
 	</div>
   	<div class="tab-pane container fade" id="deposito">Area dos Depositos</div>
   	<div class="tab-pane container fade" id="sacar">Area dos Saques</div>
-   	<div class="tab-pane container fade" id="extratos">Area dos Extratos</div>
-</div>
-<div class="jumbotron bg-primary text-center text-white" style="margin-bottom:0">
-  <p>Caixa de Economias &#169; Visto-Preto 2022</p>
+      <div class="tab-pane container fade" id="extratos">
+
+		<div class="card container p-3 my-3" style="background-color: #e0ffff;">
+			<div class="card-body">
+				<h2><span style="color: #1e90ff; font-weight: bold;">Extratos</span></h2>
+				  <table class="table table-bordered table-hover">
+				    <thead class="thead-dark">
+				      <tr>
+				        <th>Data</th>
+				        <th>Movimentação</th>
+				        <th>Valor</th>
+				      </tr>
+				    </thead>
+					<tbody>
+						{% for i in li %}
+				          <tr class="table-primary text-dark"> <td align="center">{{ i[0] }}</td><td align="center">{{ i[1].capitalize() }}</td><td align="right"><span style="color: #008000;">{{ real(i[2]) }}</span></td></tr>
+				        {% endfor %}
+	            		
+				  </tbody>
+
+
+			  </table>
+
+            </div>
+        </div>
+       </div>
 </div>
 
 </body>

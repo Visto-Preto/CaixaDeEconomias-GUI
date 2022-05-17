@@ -1,5 +1,5 @@
-import os, sqlite3
-from flask import Flask, render_template
+import os, sqlite3, sys
+from flask import Flask, render_template, url_for
 from module.realsymbol import Real as rs
 from datetime import datetime
 
@@ -20,14 +20,16 @@ def homepage():
 	def ultrow():
 		con = sqlite3.connect('settings/cde.db')
 		cur = con.cursor()
+		li = []
 		for row in cur.execute('''SELECT * FROM movimentacao'''):
 			ult = row
+			li += [row]
 		x = ult[2]
 		y = ult[1]
 		z = ult[0]
 		con.commit()
 		con.close()
-		return x, y, z
+		return x, y, z, li
 	def v_conta():
 		ver()
 		def del_car(x):
@@ -50,10 +52,11 @@ def homepage():
 		return (deposito - saque)
 	
 	conta = rs.float_to_s(v_conta())
-	ultC , ultO, dt = ultrow()
+	ultC , ultO, dt, li = ultrow()
 	ultC = rs.float_to_s(ultC)
 	ultO = ultO.capitalize()
-	return render_template('index.html', ultC = ultC, ultO = ultO, dt = dt, conta =  conta)
+	return render_template('index.html', ultC = ultC, ultO = ultO, dt = dt, conta =  conta, li = li, real = rs.float_to_s)
+
 
 if __name__ == '__main__':
 	app.run(debug=True)
