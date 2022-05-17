@@ -52,15 +52,14 @@
 
 				<h2><span style="color: #1e90ff; font-weight: bold;">Caixa de Economias</span></h2>
 				<br>
-				 <div class="card bg-dark text-white">
-	    			<div class="card-body"><p>Ultima movimentação: {{dt}} </p><span style="font-size: 20px; font-weight: bold;">{{ultO}}</span> <span style="color: #008000; font-size: 20px; font-weight: bold;">{{ultC}}</span></div>
-	  			</div>
-	  			<br>
 				<div class="card bg-dark text-white">
 	    			<div class="card-body"><p>Valor em conta</p><h2 class="float-right"><span style="color: #008000; font-weight: bold;">{{conta}}</span></span></h2></div>
 	  			</div>
 	  			<br>
-
+				 	<div class="card bg-dark text-white">
+	    			<div class="card-body"><p>Ultima movimentação: {{dt}} </p><span style="font-size: 20px; font-weight: bold;">{{ultO}}</span> <span style="color: #008000; font-size: 20px; font-weight: bold;">{{ultC}}</span></div>
+	  			</div>
+	  			<br>
 		  		<form>
 
 		  		    <div class="input-group mb-3">
@@ -73,6 +72,7 @@
 		            <br>
 		      </form>
 		      <form>
+		      		<br>
 		  		    <div class="input-group mb-3">
 		    		    <div class="input-group-prepend">
 		      				<span class="input-group-text">R$</span>
@@ -80,6 +80,7 @@
 		                <input type="number" step="any" class="form-control">
 		            </div>
 		            <input type="submit" class="btn btn-danger  form-control" value="Sacar">
+		            <br>
 		      </form>
 
 
