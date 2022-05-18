@@ -55,7 +55,7 @@
 	  			</div>
 	  			<br>
 				 	<div class="card bg-dark text-white">
-	    			<div class="card-body"><p>Ultima movimentação: {{dt}} </p><span style="font-size: 20px; font-weight: bold;">{{ultO}}</span> <span style="color: #008000; font-size: 20px; font-weight: bold;">{{ultC}}</span></div>
+	    			<div class="card-body"><p>Ultima movimentação: {{dt}} </p><span style="font-size: 20px; font-weight: bold;">{{ultO}}</span> <span class="float-right" style="color: #008000; font-size: 20px; font-weight: bold;">{{ultC}}</span></div>
 	  			</div>
 	  			<br>
 
@@ -63,18 +63,28 @@
 	    		<div class="card-body">
 		            <p>Movimentar conta</p>
 
-		  		<form>
+		  		<form action="#" methods="get">
 
 		  		    <div class="input-group mb-3">
 		    		    <div class="input-group-prepend">
 		      				<span class="input-group-text">R$</span>
 		   			    </div>
-		                <input type="number" step="any" class="form-control">
-		            </div>
-		
-		            <input type="button" class="btn btn-success form-control" value="Depositar">
-		            <br><br>
-		            <input type="button" class="btn btn-danger  form-control" value="Sacar">
+		                <input type="number" step="any" name="movimento" class="form-control">
+		           </div>
+		           <br>
+			
+		           <div class="custom-control custom-radio custom-control-inline">
+                         <input type="radio" class="custom-control-input" id="customRadio1" name="mov" value="deposito">
+                         <label class="custom-control-label" for="customRadio1">Depositar</label>
+                   </div>
+                   <div class="custom-control custom-radio custom-control-inline">
+                         <input type="radio" class="custom-control-input" id="customRadio2" name="mov" value="saque">
+                         <label class="custom-control-label" for="customRadio2">Sacar</label>
+                   </div>
+                   
+                   <br>
+                   <br>
+		           <a href="{{ url_for('depositar') }}"><input type="submit" class="btn btn-success form-control" value="Enviar"></a>
 		            <br>
 
 		      </form>

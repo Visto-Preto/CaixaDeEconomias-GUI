@@ -1,5 +1,5 @@
-import os, sqlite3, sys
-from flask import Flask, render_template, url_for
+import os, sqlite3
+from flask import Flask, render_template, url_for, request
 from module.realsymbol import Real as rs
 from datetime import datetime
 
@@ -56,7 +56,9 @@ def homepage():
 	ultC = rs.float_to_s(ultC)
 	ultO = ultO.capitalize()
 	return render_template('index.html', ultC = ultC, ultO = ultO, dt = dt, conta =  conta, li = li, real = rs.float_to_s)
-
-
+@app.route('/depositar')
+def depositar():
+    a = 'leo'
+    return a
 if __name__ == '__main__':
 	app.run(debug=True)
