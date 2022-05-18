@@ -78,8 +78,11 @@ def homepage():
 def movimentacao():
 	tipo = request.args.get("tipo")
 	movto = request.args.get("movimento")
+	if movto == '':
+		movto = 0
 	if tipo == 'saque':
 		movto = (float(movto) - (2 * float(movto)))
+
 
 	data = datetime.today().strftime('%d/%m/%Y')
 	def mov_func(x,y,z):
