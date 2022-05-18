@@ -51,11 +51,11 @@
 
 				<br>
 				<div class="card bg-dark text-white">
-	    			<div class="card-body"><p>Valor em conta</p><h1 class="float-right"><span style="color: #008000; font-weight: bold;">{{conta}}</span></span></h1></div>
+	    			<div class="card-body"><p>Valor em conta</p><h1 class="float-right"><span style="color: {{  cor_conta }}; font-weight: bold;">{{conta}}</span></span></h1></div>
 	  			</div>
 	  			<br>
 				 	<div class="card bg-dark text-white">
-	    			<div class="card-body"><p>Ultima movimentação: {{dt}} </p><span style="font-size: 20px; font-weight: bold;">{{ultO}}</span> <span class="float-right" style="color: #008000; font-size: 20px; font-weight: bold;">{{ultC}}</span></div>
+	    			<div class="card-body"><p>Ultima movimentação: {{dt}} </p><span style="font-size: 20px; font-weight: bold;">{{ultO}}</span> <span class="float-right" style="color: {{ cor_ultC }}; font-size: 20px; font-weight: bold;">{{ultC}}</span></div>
 	  			</div>
 	  			<br>
 
@@ -110,13 +110,16 @@
 				{% for i in li %}
 							{% if 	i[1] == 'deposito' %}
 							{% set cor_mov = 'table-info'%}
+							{% set cor_valor = '#00CC00'%}
 							{% elif 	i[1] == 'saque' %}
 							{% set cor_mov = 'table-danger'%}
+							{% set cor_valor = '#DF0101'%}
 							{% else %}
 							{% set cor_mov = 'table-success' %}
+							{% set cor_valor = '#067EF6'%}
 							{% endif %}
 
-				<tr class="{{ cor_mov }}"> <td align="center" style=" font-weight: bold;">{{ i[0] }}</td><td align="center" style=" font-weight: bold;">{{ i[1].capitalize() }}</td><td align="right" style="font-weight: bold; color: #008000;">{{ real(i[2]) }}</td></tr>
+				<tr class="{{ cor_mov }}"> <td align="center" style=" font-weight: bold;">{{ i[0] }}</td><td align="center" style=" font-weight: bold;">{{ i[1].capitalize() }}</td><td align="right" style="font-weight: bold; color: {{  cor_valor }};">{{ real(i[2]) }}</td></tr>
 				{% endfor %}	
 			</tbody>
 		</table>

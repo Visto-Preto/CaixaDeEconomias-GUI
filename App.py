@@ -18,6 +18,7 @@ def homepage():
 			con.commit()
 			con.close()
 	def ultrow():
+		ver()
 		con = sqlite3.connect('settings/cde.db')
 		cur = con.cursor()
 		li = []
@@ -42,21 +43,34 @@ def homepage():
 			return x
 		con = sqlite3.connect('settings/cde.db')
 		cur = con.cursor()
-		for row in cur.execute('''SELECT SUM(VMov) FROM movimentacao WHERE TMov='deposito' '''):
-			deposito = row
-			deposito = del_car(deposito)
-		for row in cur.execute('''SELECT SUM(VMov) FROM movimentacao WHERE TMov='saque' '''):
-			saque = row
-		saque = del_car(saque)
+		for row in cur.execute('''SELECT SUM(VMov) FROM movimentacao '''):
+			conta = row
+			conta = del_car(conta)
 		con.commit()
 		con.close()
-		return (deposito - saque)
+		return conta
 	
-	conta = rs.float_to_s(v_conta())
 	ultC , ultO, dt, li = ultrow()
+	if ultC > 0:
+		cor_ultC = '#00CC00'
+	elif ultC  < 0:
+		cor_ultC = '#DF0101'
+	else:
+		cor_ultC = '#33CCFF'
+
+	conta = rs.float_to_s(v_conta())
+	cor_conta = rs.string_to_f(conta)
+	if cor_conta > 0:
+		cor_conta = '#00CC00'
+	elif cor_conta < 0:
+		cor_conta = '#DF0101'
+	else:
+		cor_conta = '#33CCFF'
+
+
 	ultC = rs.float_to_s(ultC)
 	ultO = ultO.capitalize()
-	return render_template('index.html', ultC = ultC, ultO = ultO, dt = dt, conta =  conta, li = li, real = rs.float_to_s)
+	return render_template('index.html', ultC = ultC, cor_ultC = cor_ultC, ultO = ultO, dt = dt, conta =  conta, cor_conta = cor_conta, li = li, real = rs.float_to_s)
 
 
 
@@ -64,6 +78,9 @@ def homepage():
 def movimentacao():
 	tipo = request.args.get("tipo")
 	movto = request.args.get("movimento")
+	if tipo == 'saque':
+		movto = (float(movto) - (2 * float(movto)))
+
 	data = datetime.today().strftime('%d/%m/%Y')
 	def mov_func(x,y,z):
 		con = sqlite3.connect('settings/cde.db')
