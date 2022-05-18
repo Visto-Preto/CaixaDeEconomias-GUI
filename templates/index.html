@@ -63,7 +63,7 @@
 	    		<div class="card-body">
 		            <p>Movimentar conta</p>
 
-		  		<form action="#" methods="get">
+		  		<form action="{{ url_for('movimentacao') }}" methods="get">
 
 		  		    <div class="input-group mb-3">
 		    		    <div class="input-group-prepend">
@@ -74,17 +74,17 @@
 		           <br>
 			
 		           <div class="custom-control custom-radio custom-control-inline">
-                         <input type="radio" class="custom-control-input" id="customRadio1" name="mov" value="deposito" checked>
+                         <input type="radio" class="custom-control-input" id="customRadio1" name="tipo" value="deposito" checked>
                          <label class="custom-control-label" for="customRadio1">Depositar</label>
                    </div>
                    <div class="custom-control custom-radio custom-control-inline">
-                         <input type="radio" class="custom-control-input" id="customRadio2" name="mov" value="saque">
+                         <input type="radio" class="custom-control-input" id="customRadio2" name="tipo" value="saque">
                          <label class="custom-control-label" for="customRadio2">Sacar</label>
                    </div>
                    
                    <br>
                    <br>
-		           <a href="{{ url_for('depositar') }}"><input type="submit" class="btn btn-success form-control" value="Enviar"></a>
+		               <input type="submit" class="btn btn-success form-control" value="Enviar">
 		            <br>
 
 		      </form>
@@ -108,7 +108,15 @@
 			</thead>
 			<tbody>
 				{% for i in li %}
-				<tr> <td align="center">{{ i[0] }}</td><td align="center">{{ i[1].capitalize() }}</td><td align="right"><span style="color: #008000;">{{ real(i[2]) }}</span></td></tr>
+							{% if 	i[1] == 'deposito' %}
+							{% set cor_mov = 'table-info'%}
+							{% elif 	i[1] == 'saque' %}
+							{% set cor_mov = 'table-danger'%}
+							{% else %}
+							{% set cor_mov = 'table-success' %}
+							{% endif %}
+
+				<tr class="{{ cor_mov }}"> <td align="center" style=" font-weight: bold;">{{ i[0] }}</td><td align="center" style=" font-weight: bold;">{{ i[1].capitalize() }}</td><td align="right" style="font-weight: bold; color: #008000;">{{ real(i[2]) }}</td></tr>
 				{% endfor %}	
 			</tbody>
 		</table>

@@ -1,5 +1,5 @@
 import os, sqlite3
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, redirect, request
 from module.realsymbol import Real as rs
 from datetime import datetime
 
@@ -27,6 +27,7 @@ def homepage():
 		x = ult[2]
 		y = ult[1]
 		z = ult[0]
+
 		con.commit()
 		con.close()
 		return x, y, z, li
@@ -56,9 +57,24 @@ def homepage():
 	ultC = rs.float_to_s(ultC)
 	ultO = ultO.capitalize()
 	return render_template('index.html', ultC = ultC, ultO = ultO, dt = dt, conta =  conta, li = li, real = rs.float_to_s)
-@app.route('/depositar')
-def depositar():
-    a = 'leo'
-    return a
+
+
+
+@app.route('/movimentacao', methods=['GET'])
+def movimentacao():
+	tipo = request.args.get("tipo")
+	movto = request.args.get("movimento")
+	data = datetime.today().strftime('%d/%m/%Y')
+	def mov_func(x,y,z):
+		con = sqlite3.connect('settings/cde.db')
+		cur = con.cursor()
+		cur.execute('''INSERT INTO movimentacao VALUES('{}', '{}', '{}')'''.format(x, y, z))
+		con.commit()
+		con.close()
+	mov_func(data, tipo, movto)
+	return redirect( url_for('homepage') )
+
+
+
 if __name__ == '__main__':
 	app.run(debug=True)
