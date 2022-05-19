@@ -81,20 +81,25 @@
 		         <br>
 		              <!-- The Modal -->
 					  <div class="modal" id="myModal">
-					    <div class="modal-dialog">
+					    <div class="modal-dialog modal-dialog-centered">
 					      <div class="modal-content">
 					      
 					        <!-- Modal Header -->
 					        <div class="modal-header bg-dark">
-					          <h4 class="modal-title">Confirme a movimentaçao</h4>
+					          <h4 class="modal-title">Insira uma descrição</h4>
+
 					          <button type="button" class="close" data-dismiss="modal">&times;</button>
 					        </div>
 					        
 					        <!-- Modal body -->
 					        <div class="modal-body text-dark">
-					            
-					        	<script type="text/javascript">var valor = document.getElementById("mv") </script>
-					        	
+					        	<br>
+					        	<div class="input-group mb-3">
+						    		  <div class="input-group-prepend">
+						      			<span class="input-group-text">Descrição</span>
+						   			  </div>
+					        		<input type="text" class="form-control" name="desc">
+					        	</div>
 					        </div>
 					        
 					        <!-- Modal footer -->
@@ -135,14 +140,14 @@
 							{% set cor_valor = '#067EF6'%}
 							{% endif %}
 
-				<tr class="{{ cor_mov }}"  data-toggle="tooltip" title="{{ i[3] }}"> <td align="center" style=" font-weight: bold;">{{ i[0] }}</td><td align="center" style=" font-weight: bold;">{{ i[1].capitalize() }}</td><td align="right" style="font-weight: bold; color: {{  cor_valor }};">{{ real(i[2]) }}</td></tr>
+				<tr class="{{ cor_mov }}"  data-toggle="tooltip" title="{{ i[3].capitalize() }}"> <td align="center" style=" font-weight: bold;">{{ i[0] }}</td><td align="center" style=" font-weight: bold;">{{ i[1].capitalize() }}</td><td align="right" style="font-weight: bold; color: {{  cor_valor }};">{{ real(i[2]) }}</td></tr>
 				{% endfor %}	
 			</tbody>
 		</table>
 
 		<script>
 			$(document).ready(function(){
-	  	$('[data-toggle="tooltip"]').tooltip({title: "Hooray", placement: "bottom"});   
+	  	$('[data-toggle="tooltip"]').tooltip({placement: "bottom"});   
 			});
 		</script>
 	</div>

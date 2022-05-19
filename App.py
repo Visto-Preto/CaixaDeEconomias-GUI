@@ -78,6 +78,8 @@ def homepage():
 def movimentacao():
 	tipo = request.args.get("tipo")
 	movto = request.args.get("movimento")
+	desc = request.args.get("desc")
+	desc = desc.lower()
 	if movto == '':
 		movto = 0
 	if tipo == 'saque':
@@ -85,13 +87,13 @@ def movimentacao():
 
 
 	data = datetime.today().strftime('%d/%m/%Y')
-	def mov_func(x,y,z):
+	def mov_func(x,y,z,a):
 		con = sqlite3.connect('settings/cde.db')
 		cur = con.cursor()
-		cur.execute('''INSERT INTO movimentacao VALUES('{}', '{}', '{}')'''.format(x, y, z))
+		cur.execute('''INSERT INTO movimentacao VALUES('{}', '{}', '{}', '{}')'''.format(x, y, z, a))
 		con.commit()
 		con.close()
-	mov_func(data, tipo, movto)
+	mov_func(data, tipo, movto, desc)
 	return redirect( url_for('homepage') )
 
 
