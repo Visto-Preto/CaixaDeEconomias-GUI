@@ -64,7 +64,7 @@
 		    		  <div class="input-group-prepend">
 		      			<span class="input-group-text">R$</span>
 		   			  </div>
-		          <input type="number" step="any" name="movimento" class="form-control">
+		          <input type="number" step="any" name="movimento" class="form-control" id="mv">
 		        </div>
 		        <br>
 		        <div class="custom-control custom-radio custom-control-inline">
@@ -93,8 +93,8 @@
 					        <!-- Modal body -->
 					        <div class="modal-body text-dark">
 					            
-
-					            
+					        	<script type="text/javascript">var valor = document.getElementById("mv") </script>
+					        	
 					        </div>
 					        
 					        <!-- Modal footer -->
@@ -135,10 +135,16 @@
 							{% set cor_valor = '#067EF6'%}
 							{% endif %}
 
-				<tr class="{{ cor_mov }}"> <td align="center" style=" font-weight: bold;">{{ i[0] }}</td><td align="center" style=" font-weight: bold;">{{ i[1].capitalize() }}</td><td align="right" style="font-weight: bold; color: {{  cor_valor }};">{{ real(i[2]) }}</td></tr>
+				<tr class="{{ cor_mov }}"  data-toggle="tooltip" title="{{ i[3] }}"> <td align="center" style=" font-weight: bold;">{{ i[0] }}</td><td align="center" style=" font-weight: bold;">{{ i[1].capitalize() }}</td><td align="right" style="font-weight: bold; color: {{  cor_valor }};">{{ real(i[2]) }}</td></tr>
 				{% endfor %}	
 			</tbody>
 		</table>
+
+		<script>
+			$(document).ready(function(){
+	  	$('[data-toggle="tooltip"]').tooltip({title: "Hooray", placement: "bottom"});   
+			});
+		</script>
 	</div>
 </body>
 </html>
