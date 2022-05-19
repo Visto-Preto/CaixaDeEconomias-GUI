@@ -70,7 +70,7 @@ def homepage():
 
 	ultC = rs.float_to_s(ultC)
 	ultO = ultO.capitalize()
-	return render_template('index.html', ultC = ultC, cor_ultC = cor_ultC, ultO = ultO, dt = dt, conta =  conta, cor_conta = cor_conta, li = li, real = rs.float_to_s)
+	return render_template('index2.html', ultC = ultC, cor_ultC = cor_ultC, ultO = ultO, dt = dt, conta =  conta, cor_conta = cor_conta, li = li, real = rs.float_to_s)
 
 
 
