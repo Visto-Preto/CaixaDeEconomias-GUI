@@ -4,6 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   		<script src="{{ url_for('static', filename='js/jquery.slim.min.js') }}"></script>
   		<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
   		<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
@@ -20,13 +21,13 @@
 	  <div class="collapse navbar-collapse" id="collapsibleNavbar">
 	    <ul class="navbar-nav">
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">Ajuda</a>
-	      </li>
-	      <li class="nav-item">
 	        <a class="nav-link" href="#">Cadraste-se</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="https://github.com/Visto-Preto/CaixaDeEconomias-GUI">GitHub</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">Ajuda</a>
 	      </li>   
 	    </ul>
 	  </div>  
@@ -37,22 +38,28 @@
 		<br>
 		<div class="card bg-dark text-white" >
 	    	<div class="card-body ">
-	    		<div class="text-center">
+	    		<div class="text-center mb-3">
   					<img src="/static/imgs/logo.png" class="rounded-circle" alt="Cinque Terre" width="200" height="200"> 
   				</div>
-	  			<form action="/action_page">
-	    			<div class="form-group">
-	      				<input type="email" class="form-control" id="email" placeholder="Usuário" name="email">
-	    			</div>
-	    			<div class="form-group">
+	  			<form action="/action_page" method="POST">
+
+
+	  				<div class="input-group mb-3">
+	  					<div class="input-group-prepend">
+						    <span class="input-group-text"><i class="fas fa-user-alt"></i></span>
+						</div>
+		        		<input type="text" class="form-control" id="uname" placeholder="Usuário" name="user">
+		      		</div>
+
+	    			<div class="input-group mb-3">
+	    				<div class="input-group-prepend">
+						    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+						</div>
 	      				<input type="password" class="form-control" id="pwd" placeholder="Senha" name="pswd">
 	    			</div>
-	    			<button type="submit" class="btn btn-primary form-control">Avançar</button>
-	    			<br>
-	    			<br>
-	    			<button type="button" class="btn btn-primary form-control">Esquerceu sua senha?</button>
-	    			<br>
-	    			<br>
+
+	    			<button type="submit" class="btn btn-primary form-control mb-3">Avançar</button>
+	    			<button type="button" class="btn btn-primary form-control mb-3">Esquerceu sua senha?</button>
 	    			<p class="text-center">Não tem uma conta? <a href="#">Inscreva-se</a></p>
 	  			</form>
 			</div>

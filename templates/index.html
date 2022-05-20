@@ -29,7 +29,7 @@
 	        <a class="nav-link" href="#">Sobre</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="#">Sair</a>
+	        <a class="nav-link" href="{{ url_for('sair') }}">Sair</a>
 	      </li>    
 	    </ul>
 	  </div>  
@@ -63,7 +63,7 @@
 	  <div class="card bg-dark text-white">
 	    <div class="card-body">
 		    <p>Movimentar conta</p>
-				<form action="{{ url_for('movimentacao') }}" methods="get">
+				<form action="{{ url_for('movimentacao') }}" method="POST">
 		  		<div class="input-group mb-3">
 		    		<div class="input-group-prepend">
 		      		<span class="input-group-text">R$</span>

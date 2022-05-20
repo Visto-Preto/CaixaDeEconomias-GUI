@@ -1,9 +1,10 @@
 import os, sqlite3
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, render_template, url_for, redirect, request, session
 from module.realsymbol import Real as rs
 from datetime import datetime
 
 app = Flask(__name__)
+app.secret_key = "evppdepf"
 
 class Control_DB():
 	def ver():
@@ -59,42 +60,58 @@ class Control_DB():
 		con.close()
 
 @app.route('/')
-def homepage():
-	ultC , ultO, dt, li = Control_DB.ultrow()
-	if ultC > 0:
-		cor_ultC = '#00CC00'
-	elif ultC  < 0:
-		cor_ultC = '#DF0101'
-	else:
-		cor_ultC = '#33CCFF'
-	conta = rs.float_to_s(Control_DB.v_conta())
-	cor_conta = rs.string_to_f(conta)
-	if cor_conta > 0:
-		cor_conta = '#00CC00'
-	elif cor_conta < 0:
-		cor_conta = '#DF0101'
-	else:
-		cor_conta = '#33CCFF'
-	ultC = rs.float_to_s(ultC)
-	ultO = ultO.capitalize()
-	return render_template('index.html', ultC = ultC, cor_ultC = cor_ultC, ultO = ultO, dt = dt, conta =  conta, cor_conta = cor_conta, real = rs.float_to_s)
-
-@app.route('/login')
 def login():
-	return render_template('login.html')
+	if ( session ):
+		return redirect( url_for('homepage') )
+	else:
+		return render_template('login.html')
+
+@app.route('/action_page', methods=["POST"])
+def action_page():
+	if request.form['user'] == 'vp230' and request.form['pswd'] == '123456':
+		session['usuario'] = request.form['user']
+
+		return redirect( url_for('homepage') )
+	return redirect( url_for('login') )
+
+@app.route('/homepage')
+def homepage():
+	if (session):
+		ultC , ultO, dt, li = Control_DB.ultrow()
+		if ultC > 0:
+			cor_ultC = '#00CC00'
+		elif ultC  < 0:
+			cor_ultC = '#DF0101'
+		else:
+			cor_ultC = '#33CCFF'
+		conta = rs.float_to_s(Control_DB.v_conta())
+		cor_conta = rs.string_to_f(conta)
+		if cor_conta > 0:
+			cor_conta = '#00CC00'
+		elif cor_conta < 0:
+			cor_conta = '#DF0101'
+		else:
+			cor_conta = '#33CCFF'
+		ultC = rs.float_to_s(ultC)
+		ultO = ultO.capitalize()
+		return render_template('index.html', ultC = ultC, cor_ultC = cor_ultC, ultO = ultO, dt = dt, conta =  conta, cor_conta = cor_conta, real = rs.float_to_s)
+	else:
+		return redirect( url_for('login') )
 
 @app.route('/extratos')
 def extratos():
-	Control_DB.ver()
-	a, b, c, li = Control_DB.ultrow()
-	li = li[::-1]
-	return render_template('extratos.html', li = li, real = rs.float_to_s)
+	if ( session ):
+		Control_DB.ver()
+		a, b, c, li = Control_DB.ultrow()
+		li = li[::-1]
+		return render_template('extratos.html', li = li, real = rs.float_to_s)
+	return redirect( url_for('login') )
 
-@app.route('/movimentacao', methods=['GET'])
+@app.route('/movimentacao', methods=["POST"])
 def movimentacao():
-	tipo = request.args.get("tipo")
-	movto = request.args.get("movimento")
-	desc = request.args.get("desc")
+	tipo =  request.form["tipo"]
+	movto =  request.form["movimento"]
+	desc =  request.form["desc"]
 	desc = desc.lower()
 	if movto == '':
 		movto = 0
@@ -103,6 +120,11 @@ def movimentacao():
 	data = datetime.today().strftime('%d/%m/%Y')
 	Control_DB.mov_func(data, tipo, movto, desc)
 	return redirect( url_for('homepage') )
+
+@app.route('/sair/')
+def sair():
+	session.pop('usuario', None)
+	return redirect( url_for('login') )
 
 if __name__ == '__main__':
 	app.run(debug=True, host="0.0.0.0")
