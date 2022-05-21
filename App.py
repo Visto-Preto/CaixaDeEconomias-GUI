@@ -3,6 +3,9 @@ from flask import Flask, render_template, url_for, redirect, request, session
 from module.realsymbol import Real as rs
 from datetime import datetime
 
+__author__ = "Visto-Preto"
+__version__ = "1.0.0"
+
 app = Flask(__name__)
 app.secret_key = "evppdepf"
 
