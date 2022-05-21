@@ -112,6 +112,8 @@ def movimentacao():
 	tipo =  request.form["tipo"]
 	movto =  request.form["movimento"]
 	desc =  request.form["desc"]
+	if desc == '':
+		desc = 'valor aleatório'
 	desc = desc.lower()
 	if movto == '':
 		movto = 0
@@ -121,7 +123,7 @@ def movimentacao():
 	Control_DB.mov_func(data, tipo, movto, desc)
 	return redirect( url_for('homepage') )
 
-@app.route('/sair/')
+@app.route('/sair')
 def sair():
 	session.pop('usuario', None)
 	return redirect( url_for('login') )
