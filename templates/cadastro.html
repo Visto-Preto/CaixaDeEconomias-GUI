@@ -21,7 +21,7 @@
 	  <div class="collapse navbar-collapse" id="collapsibleNavbar">
 	    <ul class="navbar-nav">
 	      <li class="nav-item">
-	        <a class="nav-link" href="{{ url_for('cadastro') }}">Cadastre-se</a>
+	        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="#">Ajuda</a>
@@ -38,7 +38,7 @@
 	    		<div class="text-center mb-3">
   					<img src="/static/imgs/logo.png" class="rounded-circle" alt="Cinque Terre" width="200" height="200"> 
   				</div>
-	  			<form action="{{ url_for('action_login') }}" method="POST">
+	  			<form action="{{ url_for('action_cadastro') }}" method="POST">
 
 
 	  				<div class="input-group mb-3">
@@ -54,10 +54,15 @@
 						</div>
 	      				<input type="password" class="form-control" id="pwd" placeholder="Senha" name="pswd">
 	    			</div>
+	    			<div class="input-group mb-3">
+	    				<div class="input-group-prepend">
+						    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+						</div>
+	      				<input type="email" class="form-control" id="email" placeholder="Email de recuperação de senha" name="email">
+	    			</div>
 
 	    			<button type="submit" class="btn btn-primary form-control mb-3">Avançar</button>
-	    			<button type="button" class="btn btn-primary form-control mb-3">Esquerceu sua senha?</button>
-	    			<p class="text-center">Não tem uma conta? <a href="{{ url_for('cadastro') }}">Inscreva-se</a></p>
+
 	  			</form>
 			</div>
 		</div>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  	<script src="{{ url_for('static', filename='js/jquery.slim.min.js') }}"></script>
+  	<script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+  	<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+		<title>Caixa de Economias</title>
+		<link rel="icon" href="static/imgs/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+	<!-- Menu de navegacao -->
+	<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+	  <a class="navbar-brand" href="{{ url_for('homepage') }}"><img src="/static/imgs/logo.png" alt="Logo" style="width:40px;"> Caixa de Economias</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar"><span class="navbar-toggler-icon"></span></button>
+	  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+	    <ul class="navbar-nav">
+	      <li class="nav-item">
+	        <a class="nav-link" href="{{ url_for('homepage') }}">Saldo</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="{{ url_for('extratos') }}">Extrato</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="#">Sobre</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="{{ url_for('sair') }}">Sair</a>
+	      </li>    
+	    </ul>
+	  </div>  
+	</nav>
+
+	<!-- container  -->
+	<div class="container">
+
+		<!-- valor da conta -->
+		<br>
+		<div class="card bg-dark text-white">
+	    <div class="card-body">
+	    	<p>Valor em conta</p>
+	    	<h1 class="float-right"><span style="color: {{  cor_conta }}; font-weight: bold;">{{conta}}</span></h1>
+	   </div>
+	  </div>
+
+
+	  <!-- ultima movimentacao -->
+	  <br>
+		<div class="card bg-dark text-white">
+	    <div class="card-body">
+	    	<p>Ultima movimentação: {{dt}}</p>
+	    	<span style="font-size: 20px; font-weight: bold;">{{ultO}}</span>
+	    	<span class="float-right" style="color: {{ cor_ultC }}; font-size: 20px; font-weight: bold;">{{ultC}}</span>
+	    </div>
+	  </div>
+
+	  <!-- movimentacao -->
+		<br>
+	  <div class="card bg-dark text-white">
+	    <div class="card-body">
+		    <p>Movimentar conta</p>
+				<form action="{{ url_for('movimentacao') }}" method="POST">
+		  		<div class="input-group mb-3">
+		    		<div class="input-group-prepend">
+		      		<span class="input-group-text">R$</span>
+		   			</div>
+		        <input type="number" step="any" name="movimento" class="form-control" id="mv">
+		      </div>
+		      <br>
+		      <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="customRadio1" name="tipo" value="deposito" checked>
+            <label class="custom-control-label" for="customRadio1">Depositar</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="customRadio2" name="tipo" value="saque">
+            <label class="custom-control-label" for="customRadio2">Sacar</label>
+          </div>
+          <br>
+          <br>
+					<input type="button" class="btn btn-success form-control" value="Enviar" data-toggle="modal" data-target="#myModal">
+		      <br>
+		      <!-- The Modal -->
+					<div class="modal" id="myModal">
+					  <div class="modal-dialog modal-dialog-centered">
+					    <div class="modal-content">
+					    
+					      <!-- Modal Header -->
+					      <div class="modal-header bg-dark">
+					        <h4 class="modal-title">Insira uma descrição</h4>
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					      </div>
+					      <!-- Modal body -->
+					      <div class="modal-body text-dark">
+					      	<br>
+					      	<div class="input-group mb-3">
+						    		<div class="input-group-prepend">
+						      		<span class="input-group-text">Descrição</span>
+						   			</div>
+					        	<input type="text" class="form-control" name="desc">
+					      	</div>
+					      </div>
+					        
+					      <!-- Modal footer -->
+					      <div class="modal-footer">
+					        <input type="submit" class="btn btn-success" value="OK" >
+					        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+					      </div>
+					        
+					    </div>
+					  </div>
+					</div> 
+				</form> 
+			</div>
+		</div>
+	</div>
+
+	<br>
+
+</body>
+</html>

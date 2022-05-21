@@ -10,22 +10,20 @@ app = Flask(__name__)
 app.secret_key = "evppdepf"
 
 class Control_DB():
-
-	def ver(x,y,z):
-		if os.path.isfile('settings/' + x + '.db'):
+	def ver():
+		if os.path.isfile('settings/cde.db'):
 			pass
 		else:
-			con = sqlite3.connect('settings/' + x + '.db')
+			con = sqlite3.connect('settings/cde.db')
 			cur = con.cursor()
-			cur.execute('''CREATE TABLE dados_login(uname TEXT, pswd TEXT, email TEXT)''')
-			cur.execute('''INSERT INTO dados_login VALUES('{}', '{}', '{}')'''.format(x, y, z))
-			cur.execute('''CREATE TABLE movimentacao(Data DATE, TMov TEXT, VMov REAL, Descricao TEXT)''')			
+			cur.execute('''CREATE TABLE movimentacao(Data date, TMov text, VMov real)''')
 			cur.execute('''INSERT INTO movimentacao VALUES('{}', '{}', '{}', '{}')'''.format(datetime.today().strftime('%d/%m/%Y'), 'abertura', '0.0', 'abertura da conta do caixa de economias'))
 			con.commit()
 			con.close()
 
-	def ultrow(x):
-		con = sqlite3.connect('settings/' + x + '.db')
+	def ultrow():
+		Control_DB.ver()
+		con = sqlite3.connect('settings/cde.db')
 		cur = con.cursor()
 		li = []
 		for row in cur.execute('''SELECT * FROM movimentacao'''):
@@ -39,7 +37,8 @@ class Control_DB():
 		con.close()
 		return x, y, z, li
 
-	def v_conta(x):
+	def v_conta():
+		Control_DB.ver()
 		def del_car(x):
 			x = x[0]
 			if x == None:
@@ -47,7 +46,7 @@ class Control_DB():
 			else:
 				x = float(x)
 			return x
-		con = sqlite3.connect('settings/' + x + '.db')
+		con = sqlite3.connect('settings/cde.db')
 		cur = con.cursor()
 		for row in cur.execute('''SELECT SUM(VMov) FROM movimentacao '''):
 			conta = row
@@ -56,8 +55,8 @@ class Control_DB():
 		con.close()
 		return conta
 
-	def mov_func(x,y,z,a, u):
-		con = sqlite3.connect('settings/' + u + '.db')
+	def mov_func(x,y,z,a):
+		con = sqlite3.connect('settings/cde.db')
 		cur = con.cursor()
 		cur.execute('''INSERT INTO movimentacao VALUES('{}', '{}', '{}', '{}')'''.format(x, y, z, a))
 		con.commit()
@@ -70,20 +69,12 @@ def login():
 	else:
 		return render_template('login.html')
 
-@app.route('/action_login', methods=["POST"])
-def action_login():
+@app.route('/action_page', methods=["POST"])
+def action_page():
+	if request.form['user'] == 'vp230' and request.form['pswd'] == '123456':
+		session['usuario'] = request.form['user']
 
-	user = request.form['user']
-	pswd = request.form['pswd']
-	if os.path.isfile('settings/' + user + '.db'):
-		con = sqlite3.connect('settings/' + user + '.db')
-		cur = con.cursor()
-		for pswd_db in cur.execute('''SELECT pswd FROM dados_login'''):
-			pswd_db = pswd_db[0]
-		if pswd == pswd_db:
-			session['usuario'] = request.form['user']
-			return redirect( url_for('homepage') )
-
+		return redirect( url_for('homepage') )
 	return redirect( url_for('login') )
 
 @app.route('/cadastro')
@@ -95,20 +86,35 @@ def action_cadastro():
 	user =  request.form["user"]
 	pswd =  request.form["pswd"]
 	email =  request.form["email"]
-	Control_DB.ver(user, pswd, email)
-	return redirect( url_for('homepage'))
+
+	def ver(x,y,z):
+		if os.path.isfile('settings/' + user + '.db'):
+			pass
+		else:
+			con = sqlite3.connect('settings/' + user + '.db')
+			cur = con.cursor()
+			cur.execute('''CREATE TABLE dados_login(uname TEXT, pswd TEXT, email TEXT)''')
+			cur.execute('''INSERT INTO dados_login VALUES('{}', '{}', '{}')'''.format(x, y, z))
+			cur.execute('''CREATE TABLE movimentacao(Data DATE, TMov TEXT, VMov REAL, Descricao TEXT)''')			
+			cur.execute('''INSERT INTO movimentacao VALUES('{}', '{}', '{}', '{}')'''.format(datetime.today().strftime('%d/%m/%Y'), 'abertura', '0.0', 'abertura da conta do caixa de economias'))
+			con.commit()
+			con.close()
+
+	ver(user, pswd, email)
+	
+	return 'email: {}<br>user: {}<br>pass: {}'.format(email, user, pswd)
 
 @app.route('/homepage')
 def homepage():
 	if (session):
-		ultC , ultO, dt, li = Control_DB.ultrow(session['usuario'])
+		ultC , ultO, dt, li = Control_DB.ultrow()
 		if ultC > 0:
 			cor_ultC = '#00CC00'
 		elif ultC  < 0:
 			cor_ultC = '#DF0101'
 		else:
 			cor_ultC = '#33CCFF'
-		conta = rs.float_to_s(Control_DB.v_conta(session['usuario']))
+		conta = rs.float_to_s(Control_DB.v_conta())
 		cor_conta = rs.string_to_f(conta)
 		if cor_conta > 0:
 			cor_conta = '#00CC00'
@@ -125,7 +131,8 @@ def homepage():
 @app.route('/extratos')
 def extratos():
 	if ( session ):
-		a, b, c, li = Control_DB.ultrow(session['usuario'])
+		Control_DB.ver()
+		a, b, c, li = Control_DB.ultrow()
 		li = li[::-1]
 		return render_template('extratos.html', li = li, real = rs.float_to_s)
 	return redirect( url_for('login') )
@@ -143,7 +150,7 @@ def movimentacao():
 	if tipo == 'saque':
 		movto = (float(movto) - (2 * float(movto)))
 	data = datetime.today().strftime('%d/%m/%Y')
-	Control_DB.mov_func(data, tipo, movto, desc, session['usuario'])
+	Control_DB.mov_func(data, tipo, movto, desc)
 	return redirect( url_for('homepage') )
 
 @app.route('/sair')
