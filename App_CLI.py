@@ -2,9 +2,14 @@
 #coding: utf-8
 __author__ = 'Visto-Preto'
 
-import os, sqlite3
+import os, sqlite3, sys
 from datetime import datetime
 from module.realsymbol import Real as rs
+from module import menus_cli
+from App import Control_DB
+
+user = sys.argv[1]
+passwd = sys.argv[2]
 
 red = '\033[1;31m'
 green = '\033[1;32m'
@@ -15,52 +20,6 @@ cyan = '\033[1;36m'
 cls = '\033[m'
 
 
-def main(x):
-    menu = '''
-{}================================================
-               {}CAIXA DE ECONOMIAS           
-{}================================================
-{}------------------------------------------------
-{}DATA: {}{}                {}HORA: {}{}
-{}------------------------------------------------
-{}UltM: {}|{}{}{}| |{}{}{}|{} {}{}
-{}------------------------------------------------
-{}Valor em conta: {}{}
-{}------------------------------------------------
-{}================================================{}
-'''.format( green, 
-            blue, 
-            green, 
-            magenta, 
-            yellow, 
-            cyan, 
-            datetime.today().strftime('%d/%m/%Y'),
-            yellow, 
-            cyan, 
-            datetime.today().strftime('%H:%M:%S'),       
-            magenta, 
-            yellow , 
-            magenta, 
-            red, 
-            'Valor 1', 
-            magenta, 
-            red, 
-            'Valor 2', 
-            magenta, 
-            'Valor 3', 
-            green, 
-            ((16 - len('Valor 4')) * ' ' + 'Valor 4'), 
-            magenta, 
-            yellow, 
-            green, 
-            ((30 - len('Valor 5')) * ' ' + 'Valor 5'), 
-            magenta, 
-            green, 
-            cls)
-
-    os.system('cls')
-    print(menu)
-    print(x())
 def mainop():
     print('{}01{}]    {}Depositar'.format(blue,cls, yellow))
     print('{}02{}]    {}Sacar'.format(blue,cls, yellow))
@@ -68,11 +27,10 @@ def mainop():
     print('{}00{}]    {}Sair'.format(blue,cls, yellow))
     print('')
     print('{}================================================{}'.format(green, cls))
-    print()
+    print('')
     rsp = str(input('{}Entre com o numero da opção:\n\n{}~/{}Terminal{} $ '.format(blue, green, yellow, cls)))
    
     if rsp == '00':
-        os.system('termux-vibrate -d 100')
         os.system('clear')
     elif rsp == '01':
         os.system('clear')
@@ -84,7 +42,7 @@ def mainop():
         os.system('clear')
         main(extrato)
     else:
-        main(mainop)
+        menus_cli.menu_conta(mainop, user, passwd)
         
 if __name__ == ('__main__'):
-    main(mainop)
+    menus_cli.menu_conta(mainop, user, passwd)

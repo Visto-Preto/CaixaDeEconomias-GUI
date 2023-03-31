@@ -1,8 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/env python3
 
 import sys, os
-from App import Control_DB
-
+from module import menus_cli
 # ________________________________
 
 __author__ = 'Visto-Preto'
@@ -21,50 +20,6 @@ path_app_cli = 'App_CLI.py'
 # ________________________________
 
 
-red = '\033[1;31m'
-green = '\033[1;32m'
-yellow = '\033[1;33m'
-blue = '\033[1;34m'
-magenta = '\033[1;35m'
-cyan = '\033[1;36m'
-cls = '\033[m'
-
-
-def menu_users():
-	menu = '''
-{}================================================
-               {}CAIXA DE ECONOMIAS           
-{}================================================
-{}------------------------------------------------
-{}Usuários cadrastados
-{}------------------------------------------------
-
-{}
-'''.format( green, 
-            blue, 
-            green, 
-            magenta, 
-            yellow,
-            magenta,
-            cyan)
-
-	print(menu)
-	users = os.listdir('settings')
-	for i in (users):
-		print(i)
-
-	menu_b = '''
-{}------------------------------------------------	
-{}================================================
-'''.format(magenta,
-            green,
-            cls)
-	print(menu_b)
-
-
-
-
-# ________________________________
 arg1 = ''
 arg2 = ''
 arg3 = ''
@@ -115,13 +70,13 @@ def arg_analise(x, y, z):
 		print('criar usuarios')
 
 	elif x == 'start' and y == '-cli' and z == '-list':
-		menu_users()
+		menus_cli.menu_users()
 
 	elif x == 'start' and y == '-cli' and z != '':
 		if os.path.isfile('settings/' + z + '.db'):
-			print('usuarios cadrastrado')
+			menus_cli.menu_users_login(z)
 		else:
-			print('usuarios nao cadrastrado')
+			menus_cli.menu_users_none(z)
 
 		
 	elif x == 'uninstall':
