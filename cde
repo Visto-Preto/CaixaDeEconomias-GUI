@@ -6,33 +6,42 @@ import sys, os, sqlite3, getpass, time
 __author__ = 'Visto-Preto'
 __version__ = '1.0.0'
 
-# ________________________________
-# Paths
+if sys.platform == 'linux':
+	if os.path.isdir('/data/data/com.termux/files/usr/share/cde/'):
+		
+		path_main = '/data/data/com.termux/files/usr/share/cde/'
+		path_db = '/data/data/com.termux/files/usr/share/cde/settings/'
+	
+	os_cls = 'clear'
+	red = '\033[1;31m'
+	green = '\033[1;32m'
+	yellow = '\033[1;33m'
+	blue = '\033[1;34m'
+	magenta = '\033[1;35m'
+	cyan = '\033[1;36m'
+	reset = '\033[m'
 
-path_app_gui = '/data/data/com.termux/files/usr/share/cde/App.py'
 
-path_app_cli = '/data/data/com.termux/files/usr/share/cde/App_CLI.py'
-
-
-
-# ________________________________
-
-
-
-red = '\033[1;31m'
-green = '\033[1;32m'
-yellow = '\033[1;33m'
-blue = '\033[1;34m'
-magenta = '\033[1;35m'
-cyan = '\033[1;36m'
-cls = '\033[m'
-
+elif sys.platform == 'win32':	
+	path_main = ''
+	path_db = 'settings/'
+	
+	os_cls = 'cls'
+	red = ''
+	green = ''
+	yellow = ''
+	blue = ''
+	magenta = ''
+	cyan = ''
+	reset = ''
+else:
+	print('Sistema operacional nao suportado')
 
 
 
 
 def menu_users():
-	os.system('clear')
+	os.system(os_cls)
 	menu = '''
 {}================================================
                {}CAIXA DE ECONOMIAS           
@@ -49,7 +58,7 @@ def menu_users():
             cyan)
 
 	print(menu)
-	users = os.listdir('/data/data/com.termux/files/usr/share/cde/settings/')
+	users = os.listdir(path_db)
 	for i in (users):
 		print(' ' + i[:-3])
 
@@ -58,12 +67,12 @@ def menu_users():
 {}================================================
 '''.format(magenta,
             green,
-            cls)
+            reset)
 	print(menu_b)
 
 
 def menu_users_none(x):
-	os.system('clear')
+	os.system(os_cls)
 	menu = '''
 {}================================================
                {}CAIXA DE ECONOMIAS           
@@ -82,12 +91,12 @@ def menu_users_none(x):
             yellow, 
             magenta, 
             green,
-            cls)
+            reset)
 	print(menu)
 	
 	
 def menu_users_login(user):
-	con = sqlite3.connect('/data/data/com.termux/files/usr/share/cde/settings/' + user + '.db')
+	con = sqlite3.connect(path_db + user + '.db')
 	cur = con.cursor()
 	for pswd_db in cur.execute('''SELECT pswd FROM dados_login'''):
 		pswd_db = pswd_db[0]
@@ -110,11 +119,11 @@ def menu_users_login(user):
             user,
             magenta, 
             green,
-            cls)
+            reset)
 	print(menu)
 	rsp = str(getpass.getpass(' {}Entre com o password:\n\n {}~/{}Terminal{} $ '.format(blue, green, yellow, cls)))
 	if rsp == pswd_db:
-		os.system('python /data/data/com.termux/files/usr/share/cde/App_CLI.py {} {}'.format(user, pswd_db))
+		os.system('python {}App_CLI.py {} {}'.format(path_main, user, pswd_db))
 	else:
 		os.system('clear')
 		print(' {}senha incorreta.{}'.format(red, cls))
@@ -163,7 +172,7 @@ def arg_analise(x, y, z):
 		print('Version ', __version__)
 		print()
 	elif x == 'start' and y == '-gui' and z == '':
-		os.system('bash /data/data/com.termux/files/usr/share/cde/gui.sh')
+		os.system('bash {}gui.sh'.format(path_main))
 	elif x == 'start' and y == '-gui' and z == '-server':
 		os.system('python {}'.format(path_app_gui))
 
@@ -174,14 +183,14 @@ def arg_analise(x, y, z):
 		menu_users()
 
 	elif x == 'start' and y == '-cli' and z != '':
-		if os.path.isfile('/data/data/com.termux/files/usr/share/cde/settings/' + z + '.db'):
+		if os.path.isfile(path_db + z + '.db'):
 			menu_users_login(z)
 		else:
 			menu_users_none(z)
 
 		
 	elif x == 'uninstall':
-		os.system('bash /data/data/com.termux/files/usr/share/cde/uninstall.sh')
+		os.system('bash {}uninstall.sh'.format(path_main))
 	else:
 		print(descricao)
 

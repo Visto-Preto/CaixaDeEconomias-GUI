@@ -12,7 +12,7 @@ app.secret_key = "evppdepf"
 class Control_DB():
 
 	def ver(x,y,z):
-		if os.path.isfile('/data/data/com.termux/files/usr/share/cde//settings/' + x + '.db'):
+		if os.path.isfile('/data/data/com.termux/files/usr/share/cde/settings/' + x + '.db'):
 			pass
 		else:
 			con = sqlite3.connect('/data/data/com.termux/files/usr/share/cde/settings/' + x + '.db')
