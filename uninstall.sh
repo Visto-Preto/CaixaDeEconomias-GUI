@@ -1,7 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/env bash
 clear
-rm -Rf /data/data/com.termux/files/usr/share/ipcheck
-rm -Rf /data/data/com.termux/files/usr/bin/ipcheck
+rm -rf /data/data/com.termux/files/usr/share/cde
+rm -rf /data/data/com.termux/files/usr/bin/cde
 echo ''
-echo 'Ip-Check desinstalado'
+echo 'CDE desinstalado'
 echo ''

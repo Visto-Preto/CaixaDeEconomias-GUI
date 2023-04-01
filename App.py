@@ -2,6 +2,7 @@ import os, sqlite3
 from flask import Flask, render_template, url_for, redirect, request, session
 from module.realsymbol import Real as rs
 from datetime import datetime
+from module import platform
 
 __author__ = "Visto-Preto"
 __version__ = "1.0.0"
@@ -9,13 +10,15 @@ __version__ = "1.0.0"
 app = Flask(__name__)
 app.secret_key = "evppdepf"
 
+path_main, path_db, os_cls, red, green, yellow, blue, magenta, cyan, reset = platform.platform()
+
 class Control_DB():
 
 	def ver(x,y,z):
-		if os.path.isfile('/data/data/com.termux/files/usr/share/cde/settings/' + x + '.db'):
+		if os.path.isfile(path_db + x + '.db'):
 			pass
 		else:
-			con = sqlite3.connect('/data/data/com.termux/files/usr/share/cde/settings/' + x + '.db')
+			con = sqlite3.connect(path_db + x + '.db')
 			cur = con.cursor()
 			cur.execute('''CREATE TABLE dados_login(uname TEXT, pswd TEXT, email TEXT)''')
 			cur.execute('''INSERT INTO dados_login VALUES('{}', '{}', '{}')'''.format(x, y, z))
@@ -25,7 +28,7 @@ class Control_DB():
 			con.close()
 
 	def ultrow(x):
-		con = sqlite3.connect('/data/data/com.termux/files/usr/share/cde/settings/' + x + '.db')
+		con = sqlite3.connect(path_db + x + '.db')
 		cur = con.cursor()
 		li = []
 		for row in cur.execute('''SELECT * FROM movimentacao'''):
@@ -47,7 +50,7 @@ class Control_DB():
 			else:
 				x = float(x)
 			return x
-		con = sqlite3.connect('/data/data/com.termux/files/usr/share/cde/settings/' + x + '.db')
+		con = sqlite3.connect(path_db + x + '.db')
 		cur = con.cursor()
 		for row in cur.execute('''SELECT SUM(VMov) FROM movimentacao '''):
 			conta = row
@@ -57,7 +60,7 @@ class Control_DB():
 		return conta
 
 	def mov_func(x,y,z,a, u):
-		con = sqlite3.connect('/data/data/com.termux/files/usr/share/cde/settings/' + u + '.db')
+		con = sqlite3.connect(path_db + u + '.db')
 		cur = con.cursor()
 		cur.execute('''INSERT INTO movimentacao VALUES('{}', '{}', '{}', '{}')'''.format(x, y, z, a))
 		con.commit()
@@ -75,8 +78,8 @@ def action_login():
 
 	user = request.form['user']
 	pswd = request.form['pswd']
-	if os.path.isfile('/data/data/com.termux/files/usr/share/cde/settings/' + user + '.db'):
-		con = sqlite3.connect('settings/' + user + '.db')
+	if os.path.isfile(path_db + user + '.db'):
+		con = sqlite3.connect(path_db + user + '.db')
 		cur = con.cursor()
 		for pswd_db in cur.execute('''SELECT pswd FROM dados_login'''):
 			pswd_db = pswd_db[0]
