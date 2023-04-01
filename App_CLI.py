@@ -71,11 +71,13 @@ def menu_conta(y, z):
             magenta, 
             green, 
             cls)
+    os.system('clear')
     print(menu)
 
     print(' {}01{}]    {}Depositar'.format(blue,cls, yellow))
     print(' {}02{}]    {}Sacar'.format(blue,cls, yellow))
     print(' {}03{}]    {}Extrato'.format(blue,cls, yellow))
+    print(' {}04{}]    {}Deletar conta'.format(blue,cls, yellow))
     print(' {}00{}]    {}Sair'.format(blue,cls, yellow))
     print('')
     print('{}================================================{}'.format(green, cls))
