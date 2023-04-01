@@ -12,10 +12,10 @@ app.secret_key = "evppdepf"
 class Control_DB():
 
 	def ver(x,y,z):
-		if os.path.isfile('settings/' + x + '.db'):
+		if os.path.isfile('/data/data/com.termux/files/usr/share/cde//settings/' + x + '.db'):
 			pass
 		else:
-			con = sqlite3.connect('settings/' + x + '.db')
+			con = sqlite3.connect('/data/data/com.termux/files/usr/share/cde/settings/' + x + '.db')
 			cur = con.cursor()
 			cur.execute('''CREATE TABLE dados_login(uname TEXT, pswd TEXT, email TEXT)''')
 			cur.execute('''INSERT INTO dados_login VALUES('{}', '{}', '{}')'''.format(x, y, z))
@@ -25,7 +25,7 @@ class Control_DB():
 			con.close()
 
 	def ultrow(x):
-		con = sqlite3.connect('settings/' + x + '.db')
+		con = sqlite3.connect('/data/data/com.termux/files/usr/share/cde/settings/' + x + '.db')
 		cur = con.cursor()
 		li = []
 		for row in cur.execute('''SELECT * FROM movimentacao'''):
@@ -47,7 +47,7 @@ class Control_DB():
 			else:
 				x = float(x)
 			return x
-		con = sqlite3.connect('settings/' + x + '.db')
+		con = sqlite3.connect('/data/data/com.termux/files/usr/share/cde/settings/' + x + '.db')
 		cur = con.cursor()
 		for row in cur.execute('''SELECT SUM(VMov) FROM movimentacao '''):
 			conta = row
@@ -57,7 +57,7 @@ class Control_DB():
 		return conta
 
 	def mov_func(x,y,z,a, u):
-		con = sqlite3.connect('settings/' + u + '.db')
+		con = sqlite3.connect('/data/data/com.termux/files/usr/share/cde/settings/' + u + '.db')
 		cur = con.cursor()
 		cur.execute('''INSERT INTO movimentacao VALUES('{}', '{}', '{}', '{}')'''.format(x, y, z, a))
 		con.commit()
@@ -75,7 +75,7 @@ def action_login():
 
 	user = request.form['user']
 	pswd = request.form['pswd']
-	if os.path.isfile('settings/' + user + '.db'):
+	if os.path.isfile('/data/data/com.termux/files/usr/share/cde/settings/' + user + '.db'):
 		con = sqlite3.connect('settings/' + user + '.db')
 		cur = con.cursor()
 		for pswd_db in cur.execute('''SELECT pswd FROM dados_login'''):

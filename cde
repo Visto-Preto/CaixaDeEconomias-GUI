@@ -1,0 +1,188 @@
+#!/data/data/com.termux/files/usr/bin/env python3
+
+import sys, os, sqlite3, getpass, time
+# ________________________________
+
+__author__ = 'Visto-Preto'
+__version__ = '1.0.0'
+
+# ________________________________
+# Paths
+
+path_app_gui = '/data/data/com.termux/files/usr/share/cde/App.py'
+
+path_app_cli = '/data/data/com.termux/files/usr/share/cde/App_CLI.py'
+
+
+
+# ________________________________
+
+
+
+red = '\033[1;31m'
+green = '\033[1;32m'
+yellow = '\033[1;33m'
+blue = '\033[1;34m'
+magenta = '\033[1;35m'
+cyan = '\033[1;36m'
+cls = '\033[m'
+
+
+
+
+
+def menu_users():
+	os.system('clear')
+	menu = '''
+{}================================================
+               {}CAIXA DE ECONOMIAS           
+{}================================================
+{}------------------------------------------------
+ {}Usuarios cadrastados
+{}------------------------------------------------{}
+'''.format( green, 
+            blue, 
+            green, 
+            magenta, 
+            yellow,
+            magenta,
+            cyan)
+
+	print(menu)
+	users = os.listdir('/data/data/com.termux/files/usr/share/cde/settings/')
+	for i in (users):
+		print(' ' + i[:-3])
+
+	menu_b = '''
+{}------------------------------------------------	
+{}================================================
+'''.format(magenta,
+            green,
+            cls)
+	print(menu_b)
+
+
+def menu_users_none(x):
+	os.system('clear')
+	menu = '''
+{}================================================
+               {}CAIXA DE ECONOMIAS           
+{}================================================
+{}------------------------------------------------
+ {}O usuario {}{}{} não esta cadrastados
+{}------------------------------------------------
+{}================================================{}
+'''.format( green, 
+            blue, 
+            green, 
+            magenta, 
+            yellow,
+            cyan,
+            x,
+            yellow, 
+            magenta, 
+            green,
+            cls)
+	print(menu)
+	
+	
+def menu_users_login(user):
+	con = sqlite3.connect('/data/data/com.termux/files/usr/share/cde/settings/' + user + '.db')
+	cur = con.cursor()
+	for pswd_db in cur.execute('''SELECT pswd FROM dados_login'''):
+		pswd_db = pswd_db[0]
+
+	os.system('clear')
+	menu = '''
+{}================================================
+               {}CAIXA DE ECONOMIAS           
+{}================================================
+{}------------------------------------------------
+ {}Usuário: {}{}
+{}------------------------------------------------
+{}================================================{}
+'''.format( green, 
+            blue, 
+            green, 
+            magenta, 
+            yellow,
+            cyan,
+            user,
+            magenta, 
+            green,
+            cls)
+	print(menu)
+	rsp = str(getpass.getpass(' {}Entre com o password:\n\n {}~/{}Terminal{} $ '.format(blue, green, yellow, cls)))
+	if rsp == pswd_db:
+		os.system('python /data/data/com.termux/files/usr/share/cde/App_CLI.py {} {}'.format(user, pswd_db))
+	else:
+		os.system('clear')
+		print(' {}senha incorreta.{}'.format(red, cls))
+		time.sleep(0.5)	
+
+
+arg1 = ''
+arg2 = ''
+arg3 = ''
+
+if len(sys.argv) == 1: #0
+	arg0 = ''
+elif len(sys.argv) == 2: #1
+	arg1 = sys.argv[1]
+
+elif len(sys.argv) == 3: #2
+	arg1 = sys.argv[1]
+	arg2 = sys.argv[2]
+
+elif len(sys.argv) == 4: #3
+	arg1 = sys.argv[1]
+	arg2 = sys.argv[2]
+	arg3 = sys.argv[3]
+else:
+	arg = 'err'
+
+descricao = '''
+
+cde	[about] [start [-gui [-server]] [-cli [username] [-create]] [-list]]
+	[uninstall] [upgrade]
+
+about	Sobre o script
+start -gui	Inciar GUI no browser
+start -gui -server	Inciar servidor de GUI
+start -cli [username]	Inciar o App em CLI
+start -cli -create	Criar novo usuarios
+start -list	Lista de usuarios cadrastrado
+uninstall	Remover a instalação do script
+
+'''
+
+def arg_analise(x, y, z):
+	if x == 'about':
+		print()
+		print('Desenvolvido por ', __author__)
+		print('Version ', __version__)
+		print()
+	elif x == 'start' and y == '-gui' and z == '':
+		os.system('bash /data/data/com.termux/files/usr/share/cde/gui.sh')
+	elif x == 'start' and y == '-gui' and z == '-server':
+		os.system('python {}'.format(path_app_gui))
+
+	elif x == 'start' and y == '-cli' and z == '-create':
+		print('criar usuarios')
+
+	elif x == 'start' and y == '-cli' and z == '-list':
+		menu_users()
+
+	elif x == 'start' and y == '-cli' and z != '':
+		if os.path.isfile('/data/data/com.termux/files/usr/share/cde/settings/' + z + '.db'):
+			menu_users_login(z)
+		else:
+			menu_users_none(z)
+
+		
+	elif x == 'uninstall':
+		os.system('bash /data/data/com.termux/files/usr/share/cde/uninstall.sh')
+	else:
+		print(descricao)
+
+arg_analise(arg1, arg2, arg3)
