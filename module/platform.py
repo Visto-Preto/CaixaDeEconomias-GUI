@@ -10,10 +10,10 @@ def platform():
 		if os.path.isdir('/data/data/com.termux/files/usr/share/cde/'):
 			path_main = '/data/data/com.termux/files/usr/share/cde/'
 			path_db = '/data/data/com.termux/files/usr/share/cde/settings/'
-
-
-		path_main = '' 
-		path_db = 'settings/' 
+		else:
+			path_main = '' 
+			path_db = 'settings/'
+ 
 		os_cls = 'clear' 
 		red = '\033[1;31m' 
 		green = '\033[1;32m' 

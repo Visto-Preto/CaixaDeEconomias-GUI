@@ -64,8 +64,7 @@ def menu_users_none(x):
             green,
             reset)
 	print(menu)
-	
-	
+
 def menu_users_login(user):
 	con = sqlite3.connect(path_db + user + '.db')
 	cur = con.cursor()
@@ -96,8 +95,8 @@ def menu_users_login(user):
 	if rsp == pswd_db:
 		os.system('python {}App_CLI.py {} {}'.format(path_main, user, pswd_db))
 	else:
-		os.system('clear')
-		print(' {}senha incorreta.{}'.format(red, cls))
+		os.system(os_cls)
+		print(' {}senha incorreta.{}'.format(red, reset))
 		time.sleep(0.5)	
 
 
@@ -145,7 +144,7 @@ def arg_analise(x, y, z):
 	elif x == 'start' and y == '-gui' and z == '':
 		os.system('bash {}gui.sh'.format(path_main))
 	elif x == 'start' and y == '-gui' and z == '-server':
-		os.system('python {}'.format(path_app_gui))
+		os.system('python {}App.py'.format(path_main))
 
 	elif x == 'start' and y == '-cli' and z == '-create':
 		print('criar usuarios')
