@@ -31,7 +31,7 @@ def f_extrato(x):
     print('{}------------------------------------------------{}'.format(magenta, reset))
     for i in x:
         v_ex = rs.float_to_s(i[2])
-        print(' {}|{}{}{}| |{}{}{}| {}{}{}'.format(magenta, red, i[1], magenta, red, i[0], magenta, green, ((22 - len(v_ex)) * ' ' + v_ex), reset))
+        print(' {}|{}{}{}| |{}{}{}| {}{}{}'.format(magenta, blue, i[1], magenta, blue, i[0], magenta, green, ((22 - len(v_ex)) * ' ' + v_ex), reset))
         print('')
         print(' {}Desc: {}{}{}'.format(yellow, cyan, i[3], reset))
         print('{}------------------------------------------------{}'.format(magenta, reset))
@@ -88,10 +88,10 @@ def menu_conta(y, z):
             magenta, 
             yellow , 
             magenta, 
-            red, 
+            blue, 
             tipo, 
             magenta, 
-            red, 
+            blue, 
             ultdata, 
             magenta, 
 			
