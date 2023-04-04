@@ -71,7 +71,7 @@ def menu_users_login(user):
 	for pswd_db in cur.execute('''SELECT pswd FROM dados_login'''):
 		pswd_db = pswd_db[0]
 
-	os.system('clear')
+	os.system(os_cls)
 	menu = '''
 {}================================================
                {}CAIXA DE ECONOMIAS           

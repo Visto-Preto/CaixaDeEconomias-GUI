@@ -18,6 +18,44 @@ conta = rs.float_to_s((Control_DB.v_conta(user)))
 ultvalor, tipo, ultdata, extrato = Control_DB.ultrow(user)
 ultvalor =  rs.float_to_s(ultvalor)
 
+
+def f_extrato(x):
+    os.system(os_cls)
+    print('{}================================================{}'.format(green, reset))
+    print('               {}CAIXA DE ECONOMIAS{}                '.format(blue, reset))
+    print('================================================'.format(green, reset))
+    print(' {}Usuário: {}{}{}'.format(yellow, cyan, user, reset))
+    print('{}================================================{}'.format(green, reset))
+    print('{}------------------------------------------------{}'.format(magenta,reset))
+    print('{} Extratos de movimentação{}'.format(yellow, reset))
+    print('------------------------------------------------')
+    for i in x:
+        v_ex = rs.float_to_s(i[2])
+        print(' |{}| |{}| {}'.format(i[1], i[0], ((22 - len(v_ex)) * ' ' + v_ex)))
+        print()
+        print(' Desc: {}'.format(i[3]))
+        print('------------------------------------------------')
+    print('================================================')
+    print(' Valor em conta: {}'.format( ((30 - len(conta)) * ' ' + conta) ))
+    print('================================================')
+    print('')
+    print(' {}01{}]    {}Terminal'.format(blue,reset, yellow))
+    print(' {}00{}]    {}Sair'.format(blue,reset, yellow))
+    print('')
+    print('{}================================================{}'.format(green, reset))
+    print('')
+    rsp = str(input(' {}Entre com o numero da opção:\n\n {}~/{}Terminal{} $ '.format(blue, green, yellow, reset)))
+    
+    if rsp == '00':
+        os.system(os_cls)
+    elif rsp == '01':
+        os.system(os_cls)
+        menu_conta(user, passwd)
+    else:
+        os.system(os_cls)
+        f_extrato(extrato)
+
+
 def menu_conta(y, z):
     menu = '''
 {}================================================
@@ -89,7 +127,7 @@ def menu_conta(y, z):
         main(sacar)
     elif rsp == '03':
         os.system(os_cls)
-        main(extrato)
+        f_extrato(extrato)
     else:
         menu_conta(user, passwd)
 
