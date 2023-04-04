@@ -39,7 +39,7 @@ def f_extrato(x):
     print(' {}Valor em conta: {}{}{}'.format(yellow, green, ((30 - len(conta)) * ' ' + conta), reset ))
     print('{}================================================{}'.format(green, reset))
     print('')
-    print(' {}01{}]    {}Terminal'.format(blue,reset, yellow))
+    print(' {}01{}]    {}Voltar'.format(blue,reset, yellow))
     print(' {}00{}]    {}Sair'.format(blue,reset, yellow))
     print('')
     print('{}================================================{}'.format(green, reset))
@@ -50,63 +50,27 @@ def f_extrato(x):
         os.system(os_cls)
     elif rsp == '01':
         os.system(os_cls)
-        menu_conta(user, passwd)
+        menu_conta()
     else:
         os.system(os_cls)
         f_extrato(extrato)
 
 
-def menu_conta(y, z):
-    menu = '''
-{}================================================
-               {}CAIXA DE ECONOMIAS           
-{}================================================
- {}Usuário: {}{}
-{}================================================
-{}------------------------------------------------
- {}DATA: {}{}                {}HORA: {}{}
-{}------------------------------------------------
- {}UltM: {}|{}{}{}| |{}{}{}| {}{}
-{}------------------------------------------------
- {}Valor em conta: {}{}
-{}------------------------------------------------
-{}================================================{}
-'''.format( green, 
-            blue, 
-            green,
-            yellow,
-            cyan,
-            y,
-            green, 
-            magenta, 
-            yellow, 
-            cyan, 
-            datetime.today().strftime('%d/%m/%Y'),
-            yellow, 
-            cyan, 
-            datetime.today().strftime('%H:%M:%S'),       
-            magenta, 
-            yellow , 
-            magenta, 
-            blue, 
-            tipo, 
-            magenta, 
-            blue, 
-            ultdata, 
-            magenta, 
-			
-            green, 
-            ((16 - len(ultvalor)) * ' ' + ultvalor), 
-            magenta, 
-            yellow, 
-            green, 
-            ((30 - len(conta)) * ' ' + conta), 
-            magenta, 
-            green, 
-            reset)
-    os.system(os_cls)
-    print(menu)
-
+def menu_conta():
+    print('{}================================================{}'.format(green, reset))
+    print('               {}CAIXA DE ECONOMIAS{}            '.format(blue, reset))
+    print('{}================================================{}'.format(green, reset))
+    print(' {}Usuário: {}{}{}'.format(yellow, cyan, user, reset))
+    print('{}================================================{}'.format(green, reset))
+    print('{}------------------------------------------------{}'.format(magenta,reset))
+    print(' {}DATA: {}{}                {}HORA: {}{}{}'.format(yellow, cyan, datetime.today().strftime('%d/%m/%Y'), yellow, cyan, datetime.today().strftime('%H:%M:%S'), reset))
+    print('{}------------------------------------------------{}'.format(magenta,reset))
+    print(' {}UltM: {}|{}{}{}| |{}{}{}| {}{}{}'.format(yellow , magenta, blue, tipo, magenta, blue, ultdata, magenta, green, ((16 - len(ultvalor)) * ' ' + ultvalor), reset))
+    print('{}------------------------------------------------{}'.format(magenta,reset))
+    print('{}================================================{}'.format(green, reset))
+    print(' {}Valor em conta: {}{}{}'.format(yellow, green, ((30 - len(conta)) * ' ' + conta), reset ))
+    print('{}================================================{}'.format(green, reset))
+    print('')
     print(' {}01{}]    {}Depositar'.format(blue,reset, yellow))
     print(' {}02{}]    {}Sacar'.format(blue,reset, yellow))
     print(' {}03{}]    {}Extrato'.format(blue,reset, yellow))
@@ -129,7 +93,7 @@ def menu_conta(y, z):
         os.system(os_cls)
         f_extrato(extrato)
     else:
-        menu_conta(user, passwd)
+        menu_conta()
 
 if __name__ == ('__main__'):
-	menu_conta(user, passwd)
+	menu_conta()
