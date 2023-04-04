@@ -18,6 +18,62 @@ conta = rs.float_to_s((Control_DB.v_conta(user)))
 ultvalor, tipo, ultdata, extrato = Control_DB.ultrow(user)
 ultvalor =  rs.float_to_s(ultvalor)
 
+def deposito():
+    def mov():
+        os.system(os_cls)
+        print('{}================================================{}'.format(green, reset))
+        print('               {}CAIXA DE ECONOMIAS{}            '.format(blue, reset))
+        print('{}================================================{}'.format(green, reset))
+        print(' {}Usuário: {}{}{}'.format(yellow, cyan, user, reset))
+        print('{}================================================{}'.format(green, reset))
+        print('{}------------------------------------------------{}'.format(magenta,reset))
+        print('{} Deposito em conta {}'.format(yellow, reset))
+        print('{}------------------------------------------------{}'.format(magenta, reset))
+        print('{}================================================{}'.format(green, reset))
+        print(' {}Valor em conta: {}{}{}'.format(yellow, green, ((30 - len(conta)) * ' ' + conta), reset ))
+        print('{}================================================{}'.format(green, reset))
+        print('')
+    mov()
+    dep_v =  str(input(' {}Entre com o valor do deposito:\n\n {}~/{}Terminal{} $ '.format(blue, green, yellow, reset)))
+    dep_v = rs.del_caracter(dep_v)
+    mov()
+    print(' {}Valor a depositar:  {}{}{}'.format(yellow, green, ((26 - len(dep_v)) * ' ' + dep_v), reset ))
+    print('')
+    dep_c = str(input(' {}Entre com a descrição do deposito:\n\n {}~/{}Terminal{} $ '.format(blue, green, yellow, reset)))
+    if dep_c == '' or dep_c == ' ' or dep_c == None:
+        dep_c = 'valor aleatório'
+    dep_c = dep_c.capitalize()
+    print('')
+    mov()
+    print(' {}Valor a depositar:  {}{}{}'.format(yellow, green, ((26 - len(dep_v)) * ' ' + dep_v), reset ))
+    print('')
+    print(' {}Desc: {}{}{}'.format(yellow, cyan, dep_c, reset))
+    conta_n = rs.float_to_s(rs.string_to_f(conta) + rs.string_to_f(dep_v))
+    print('')
+    print('{}================================================{}'.format(green, reset))
+    print(' {}Valor após a movimentação:{}{}{}'.format(yellow, green, ((20 - len(conta_n)) * ' ' + conta_n), reset ))
+    print('{}================================================{}'.format(green, reset))
+    print('')
+    print(' {}01{}]    {}Confirmar'.format(blue,reset, yellow))
+    print(' {}02{}]    {}Corrigir'.format(blue,reset, yellow))
+    print(' {}03{}]    {}Voltar'.format(blue,reset, yellow))
+    print(' {}00{}]    {}Sair'.format(blue,reset, yellow))
+    print('')
+    rsp =  str(input(' {}Entre com o numero da opção:\n\n {}~/{}Terminal{} $ '.format(blue, green, yellow, reset)))
+    if rsp == '00':
+        os.system(os_cls)
+    elif rsp == '01':
+        os.system(os_cls)
+        print('valores salvos')
+    elif rsp == '02':
+        os.system(os_cls)
+        deposito()
+    elif rsp == '03':
+        os.system(os_cls)
+        menu_conta()
+    else:
+        os.system(os_cls)
+        f_extrato(extrato)
 
 def f_extrato(x):
     os.system(os_cls)
@@ -33,7 +89,7 @@ def f_extrato(x):
         v_ex = rs.float_to_s(i[2])
         print(' {}|{}{}{}| |{}{}{}| {}{}{}'.format(magenta, blue, i[1], magenta, blue, i[0], magenta, green, ((22 - len(v_ex)) * ' ' + v_ex), reset))
         print('')
-        print(' {}Desc: {}{}{}'.format(yellow, cyan, i[3], reset))
+        print(' {}Desc: {}{}{}'.format(yellow, cyan, i[3].capitalize(), reset))
         print('{}------------------------------------------------{}'.format(magenta, reset))
     print('{}================================================{}'.format(green, reset))
     print(' {}Valor em conta: {}{}{}'.format(yellow, green, ((30 - len(conta)) * ' ' + conta), reset ))
@@ -54,7 +110,6 @@ def f_extrato(x):
     else:
         os.system(os_cls)
         f_extrato(extrato)
-
 
 def menu_conta():
     os.system(os_cls)
@@ -86,7 +141,7 @@ def menu_conta():
         os.system(os_cls)
     elif rsp == '01':
         os.system(os_cls)
-        main(depositar)
+        deposito()
     elif rsp == '02':
         os.system(os_cls)
         main(sacar)
