@@ -22,7 +22,7 @@ ultvalor =  rs.float_to_s(ultvalor)
 def f_extrato(x):
     os.system(os_cls)
     print('{}================================================{}'.format(green, reset))
-    print('               {}CAIXA DE ECONOMIAS{}                '.format(blue, reset))
+    print('               {}CAIXA DE ECONOMIAS{}            '.format(blue, reset))
     print('{}================================================{}'.format(green, reset))
     print(' {}Usuário: {}{}{}'.format(yellow, cyan, user, reset))
     print('{}================================================{}'.format(green, reset))
