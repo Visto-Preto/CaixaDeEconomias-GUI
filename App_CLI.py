@@ -57,6 +57,7 @@ def f_extrato(x):
 
 
 def menu_conta():
+    os.system(os_cls)
     print('{}================================================{}'.format(green, reset))
     print('               {}CAIXA DE ECONOMIAS{}            '.format(blue, reset))
     print('{}================================================{}'.format(green, reset))
