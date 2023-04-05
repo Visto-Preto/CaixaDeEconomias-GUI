@@ -22,11 +22,12 @@ def platform():
 		magenta = '\033[1;35m' 
 		cyan = '\033[1;36m' 
 		reset = '\033[m'
+		delete = 'rm -rf'
 
 
 	elif sys.platform == 'win32':
 		path_main = ''
-		path_db = 'settings/' 
+		path_db = 'settings\\'
 		os_cls = 'cls' 
 		red = '' 
 		green = '' 
@@ -35,4 +36,5 @@ def platform():
 		magenta = '' 
 		cyan = '' 
 		reset = ''
-	return path_main, path_db, os_cls, red, green, yellow, blue, magenta, cyan, reset
+		delete = 'del /f'
+	return path_main, path_db, os_cls, red, green, yellow, blue, magenta, cyan, reset, delete

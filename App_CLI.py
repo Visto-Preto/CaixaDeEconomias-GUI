@@ -8,7 +8,7 @@ from module.realsymbol import Real as rs
 from App import Control_DB
 from module import platform
 
-path_main, path_db, os_cls, red, green, yellow, blue, magenta, cyan, reset = platform.platform()
+path_main, path_db, os_cls, red, green, yellow, blue, magenta, cyan, reset, delete = platform.platform()
 
 user = sys.argv[1]
 passwd = sys.argv[2]
@@ -17,6 +17,32 @@ Control_DB.ver(user, passwd, '')
 conta = rs.float_to_s((Control_DB.v_conta(user)))
 ultvalor, tipo, ultdata, extrato = Control_DB.ultrow(user)
 ultvalor =  rs.float_to_s(ultvalor)
+
+def delete():
+    con = sqlite3.connect(path_db + user + '.db')
+    cur = con.cursor()
+    for pswd_db in cur.execute('''SELECT pswd FROM dados_login'''):
+        pswd_db = pswd_db[0]
+    os.system(os_cls)
+    print('{}================================================{}'.format(green, reset))
+    print('               {}CAIXA DE ECONOMIAS{}            '.format(blue, reset))
+    print('{}================================================{}'.format(green, reset))
+    print(' {}Usuário: {}{}{}'.format(yellow, cyan, user, reset))
+    print('{}================================================{}'.format(green, reset))
+    print('{}------------------------------------------------{}'.format(magenta,reset))
+    print('{} Exclusão de conta{}'.format(yellow, reset))
+    print('{}------------------------------------------------{}'.format(magenta, reset))
+    print('')
+    rsp = str(getpass.getpass(' {}Entre com o password:\n\n {}~/{}Terminal{} $ '.format(blue, green, yellow, reset)))
+    if rsp == pswd_db:
+        os.system('{} {}{}.db'.format(delete, path_db, user))
+        os.system(os_cls)
+        print(' {}Conta excluida com sucesso.{}'.format(red, reset))
+        time.sleep(0.5) 
+    else:
+        os.system(os_cls)
+        print(' {}senha incorreta.{}'.format(red, reset))
+        time.sleep(0.5) 
 
 def saque():
     def mov():
@@ -197,7 +223,7 @@ def menu_conta():
     print('{}------------------------------------------------{}'.format(magenta,reset))
     print(' {}DATA: {}{}                {}HORA: {}{}{}'.format(yellow, cyan, datetime.today().strftime('%d/%m/%Y'), yellow, cyan, datetime.today().strftime('%H:%M:%S'), reset))
     print('{}------------------------------------------------{}'.format(magenta,reset))
-    print(' {}UltM: {}|{}{}{}| |{}{}{}|  {}{}{}{}'.format(yellow , magenta, blue, tipo, magenta, blue, ultdata, magenta , sp, green, ((16 - len(ultvalor)) * ' ' + ultvalor), reset))
+    print(' {}UltM: {}|{}{}{}| |{}{}{}| {}{}{}{}'.format(yellow , magenta, blue, tipo, magenta, blue, ultdata, magenta , sp, green, ((16 - len(ultvalor)) * ' ' + ultvalor), reset))
     print('{}------------------------------------------------{}'.format(magenta,reset))
     print('{}================================================{}'.format(green, reset))
     print(' {}Valor em conta: {}{}{}'.format(yellow, green, ((30 - len(conta)) * ' ' + conta), reset ))
@@ -224,6 +250,9 @@ def menu_conta():
     elif rsp == '03':
         os.system(os_cls)
         f_extrato(extrato)
+    elif rsp == '04':
+        os.system(os_cls)
+        delete()
     else:
         menu_conta()
 

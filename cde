@@ -8,7 +8,7 @@ __author__ = 'Visto-Preto'
 __version__ = '1.0.0'
 
 
-path_main, path_db, os_cls, red, green, yellow, blue, magenta, cyan, reset = platform.platform()
+path_main, path_db, os_cls, red, green, yellow, blue, magenta, cyan, reset, delete = platform.platform()
 
 
 def menu_users():
