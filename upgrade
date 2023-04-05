@@ -1,0 +1,7 @@
+clear
+rm -rf $PREFIX/share/cde
+rm -rf $PREFIX/bin/cde
+echo ''
+echo 'Atualizando o cde'
+echo ''
+curl -sLf https://raw.githubusercontent.com/Visto-Preto/CaixaDeEconomias-GUI/master/install.sh | bash

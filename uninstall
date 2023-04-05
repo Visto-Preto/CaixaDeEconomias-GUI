@@ -1,0 +1,5 @@
+clear
+rm -rf $PREFIX/share/cde
+rm -rf $PREFIX/bin/cde
+echo ''
+echo 'cde desinstalado com sucesso'

@@ -92,6 +92,7 @@ start -cli [username]	Inciar o App em CLI
 start -cli -create	Criar novo usuarios
 start -list	Lista de usuarios cadrastrado
 uninstall	Remover a instalação do script
+upgrade		Atualizar para versao mais recente
 
 '''
 
@@ -120,7 +121,9 @@ def arg_analise(x, y, z):
 
 		
 	elif x == 'uninstall':
-		os.system('bash {}uninstall.sh'.format(path_main))
+		os.system('bash {}uninstall'.format(path_main))
+	elif x == 'upgrade':
+		os.system('bash {}upgrade'.format(path_main))
 	else:
 		print(descricao)
 
