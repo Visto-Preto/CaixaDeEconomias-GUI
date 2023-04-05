@@ -18,6 +18,69 @@ conta = rs.float_to_s((Control_DB.v_conta(user)))
 ultvalor, tipo, ultdata, extrato = Control_DB.ultrow(user)
 ultvalor =  rs.float_to_s(ultvalor)
 
+def saque():
+    def mov():
+        os.system(os_cls)
+        print('{}================================================{}'.format(green, reset))
+        print('               {}CAIXA DE ECONOMIAS{}            '.format(blue, reset))
+        print('{}================================================{}'.format(green, reset))
+        print(' {}Usuário: {}{}{}'.format(yellow, cyan, user, reset))
+        print('{}================================================{}'.format(green, reset))
+        print('{}------------------------------------------------{}'.format(magenta,reset))
+        print('{} Saque {}'.format(yellow, reset))
+        print('{}------------------------------------------------{}'.format(magenta, reset))
+        print('{}================================================{}'.format(green, reset))
+        print(' {}Valor em conta: {}{}{}'.format(yellow, green, ((30 - len(conta)) * ' ' + conta), reset ))
+        print('{}================================================{}'.format(green, reset))
+        print('')
+    mov()
+    dep_v =  str(input(' {}Entre com o valor do saque:\n\n {}~/{}Terminal{} $ '.format(blue, green, yellow, reset)))
+    dep_v = rs.del_caracter(dep_v)
+    mov()
+    print(' {}Valor a sacar:  {}{}{}'.format(yellow, green, ((30 - len(dep_v)) * ' ' + dep_v), reset ))
+    print('')
+    dep_c = str(input(' {}Entre com a descrição do saque:\n\n {}~/{}Terminal{} $ '.format(blue, green, yellow, reset)))
+    if dep_c == '' or dep_c == ' ' or dep_c == None:
+        dep_c = 'valor aleatório'
+    dep_c = dep_c.capitalize()
+    print('')
+    mov()
+    print(' {}Valor a sacar:  {}{}{}'.format(yellow, green, ((30 - len(dep_v)) * ' ' + dep_v), reset ))
+    print('')
+    print(' {}Desc: {}{}{}'.format(yellow, cyan, dep_c, reset))
+    conta_n = rs.float_to_s(rs.string_to_f(conta) - rs.string_to_f(dep_v))
+    print('')
+    print('{}================================================{}'.format(green, reset))
+    print(' {}Valor após a movimentação:{}{}{}'.format(yellow, green, ((20 - len(conta_n)) * ' ' + conta_n), reset ))
+    print('{}================================================{}'.format(green, reset))
+    print('')
+    print(' {}01{}]    {}Confirmar'.format(blue,reset, yellow))
+    print(' {}02{}]    {}Corrigir'.format(blue,reset, yellow))
+    print(' {}03{}]    {}Voltar'.format(blue,reset, yellow))
+    print(' {}00{}]    {}Sair'.format(blue,reset, yellow))
+    print('')
+    rsp =  str(input(' {}Entre com o numero da opção:\n\n {}~/{}Terminal{} $ '.format(blue, green, yellow, reset)))
+    if rsp == '00':
+        os.system(os_cls)
+    elif rsp == '01':
+        os.system(os_cls)
+        data = datetime.today().strftime('%d/%m/%Y')
+        dep_v = rs.string_to_f(dep_v)
+        dep_v = (dep_v - (2 * dep_v))
+        dep_c = dep_c.lower()
+        Control_DB.mov_func(data, 'saque', dep_v, dep_c, user)
+        os.system('python {}App_CLI.py {} {}'.format(path_main, user, passwd))
+    
+    elif rsp == '02':
+        os.system(os_cls)
+        saque()
+    elif rsp == '03':
+        os.system(os_cls)
+        menu_conta()
+    else:
+        os.system(os_cls)
+        f_extrato(extrato)
+
 def deposito():
     def mov():
         os.system(os_cls)
@@ -64,7 +127,12 @@ def deposito():
         os.system(os_cls)
     elif rsp == '01':
         os.system(os_cls)
-        print('valores salvos')
+        data = datetime.today().strftime('%d/%m/%Y')
+        dep_v = rs.string_to_f(dep_v)
+        dep_c = dep_c.lower()
+        Control_DB.mov_func(data, 'deposito', dep_v, dep_c, user)
+        os.system('python {}App_CLI.py {} {}'.format(path_main, user, passwd))
+    
     elif rsp == '02':
         os.system(os_cls)
         deposito()
@@ -87,7 +155,11 @@ def f_extrato(x):
     print('{}------------------------------------------------{}'.format(magenta, reset))
     for i in x:
         v_ex = rs.float_to_s(i[2])
-        print(' {}|{}{}{}| |{}{}{}| {}{}{}'.format(magenta, blue, i[1], magenta, blue, i[0], magenta, green, ((22 - len(v_ex)) * ' ' + v_ex), reset))
+        if i[1] == 'deposito' or i[1] == 'abertura':
+            sp = ''
+        else:
+            sp = '   '
+        print(' {}|{}{}{}| |{}{}{}| {}{}{}{}'.format(magenta, blue, i[1], magenta, blue, i[0], magenta, sp,green, ((22 - len(v_ex)) * ' ' + v_ex), reset))
         print('')
         print(' {}Desc: {}{}{}'.format(yellow, cyan, i[3].capitalize(), reset))
         print('{}------------------------------------------------{}'.format(magenta, reset))
@@ -113,6 +185,10 @@ def f_extrato(x):
 
 def menu_conta():
     os.system(os_cls)
+    if tipo == 'deposito' or tipo == 'abertura':
+        sp = ''
+    else:
+        sp = '   '
     print('{}================================================{}'.format(green, reset))
     print('               {}CAIXA DE ECONOMIAS{}            '.format(blue, reset))
     print('{}================================================{}'.format(green, reset))
@@ -121,7 +197,7 @@ def menu_conta():
     print('{}------------------------------------------------{}'.format(magenta,reset))
     print(' {}DATA: {}{}                {}HORA: {}{}{}'.format(yellow, cyan, datetime.today().strftime('%d/%m/%Y'), yellow, cyan, datetime.today().strftime('%H:%M:%S'), reset))
     print('{}------------------------------------------------{}'.format(magenta,reset))
-    print(' {}UltM: {}|{}{}{}| |{}{}{}| {}{}{}'.format(yellow , magenta, blue, tipo, magenta, blue, ultdata, magenta, green, ((16 - len(ultvalor)) * ' ' + ultvalor), reset))
+    print(' {}UltM: {}|{}{}{}| |{}{}{}|  {}{}{}{}'.format(yellow , magenta, blue, tipo, magenta, blue, ultdata, magenta , sp, green, ((16 - len(ultvalor)) * ' ' + ultvalor), reset))
     print('{}------------------------------------------------{}'.format(magenta,reset))
     print('{}================================================{}'.format(green, reset))
     print(' {}Valor em conta: {}{}{}'.format(yellow, green, ((30 - len(conta)) * ' ' + conta), reset ))
@@ -144,7 +220,7 @@ def menu_conta():
         deposito()
     elif rsp == '02':
         os.system(os_cls)
-        main(sacar)
+        saque()
     elif rsp == '03':
         os.system(os_cls)
         f_extrato(extrato)
