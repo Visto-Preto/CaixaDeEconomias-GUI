@@ -10,7 +10,7 @@ __version__ = "1.0.0"
 app = Flask(__name__)
 app.secret_key = "evppdepf"
 
-path_main, path_db, os_cls, red, green, yellow, blue, magenta, cyan, reset, delete = platform.platform()
+path_main, path_db, os_cls, red, green, yellow, blue, magenta, cyan, reset, cmd_del = platform.platform()
 
 class Control_DB():
 

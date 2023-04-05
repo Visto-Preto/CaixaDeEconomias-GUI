@@ -8,62 +8,34 @@ __author__ = 'Visto-Preto'
 __version__ = '1.0.0'
 
 
-path_main, path_db, os_cls, red, green, yellow, blue, magenta, cyan, reset, delete = platform.platform()
+path_main, path_db, os_cls, red, green, yellow, blue, magenta, cyan, reset, cmd_del = platform.platform()
 
 
 def menu_users():
 	os.system(os_cls)
-	menu = '''
-{}================================================
-               {}CAIXA DE ECONOMIAS           
-{}================================================
-{}------------------------------------------------
- {}Usuarios cadrastados
-{}------------------------------------------------{}
-'''.format( green, 
-            blue, 
-            green, 
-            magenta, 
-            yellow,
-            magenta,
-            cyan)
-
-	print(menu)
+	print('{}================================================{}'.format(green, reset))
+	print('               {}CAIXA DE ECONOMIAS{}            '.format(blue, reset))
+	print('{}================================================{}'.format(green, reset))
+	print('{}------------------------------------------------{}'.format(magenta,reset))
+	print('{} Usuarios cadrastados {}'.format(yellow, reset))
+	print('{}------------------------------------------------{}'.format(magenta, reset))
+	print('')
 	users = os.listdir(path_db)
 	for i in (users):
-		print(' ' + i[:-3])
-
-	menu_b = '''
-{}------------------------------------------------	
-{}================================================
-'''.format(magenta,
-            green,
-            reset)
-	print(menu_b)
-
+		print(' {}{}{}'.format( cyan, i[:-3], reset))
+		print('')
+	print('{}------------------------------------------------{}'.format(magenta,reset))
+	print('{}================================================{}'.format(green, reset))
 
 def menu_users_none(x):
 	os.system(os_cls)
-	menu = '''
-{}================================================
-               {}CAIXA DE ECONOMIAS           
-{}================================================
-{}------------------------------------------------
- {}O usuario {}{}{} não esta cadrastados
-{}------------------------------------------------
-{}================================================{}
-'''.format( green, 
-            blue, 
-            green, 
-            magenta, 
-            yellow,
-            cyan,
-            x,
-            yellow, 
-            magenta, 
-            green,
-            reset)
-	print(menu)
+	print('{}================================================{}'.format(green, reset))
+	print('               {}CAIXA DE ECONOMIAS{}            '.format(blue, reset))
+	print('{}================================================{}'.format(green, reset))
+	print('{}------------------------------------------------{}'.format(magenta,reset))
+	print('{} O usuario {}{}{} não esta cadrastados{}'.format(yellow, cyan, x, yellow, reset))
+	print('{}------------------------------------------------{}'.format(magenta, reset))
+	print('{}================================================{}'.format(green, reset))
 
 def menu_users_login(user):
 	con = sqlite3.connect(path_db + user + '.db')
@@ -72,25 +44,14 @@ def menu_users_login(user):
 		pswd_db = pswd_db[0]
 
 	os.system(os_cls)
-	menu = '''
-{}================================================
-               {}CAIXA DE ECONOMIAS           
-{}================================================
-{}------------------------------------------------
- {}Usuário: {}{}
-{}------------------------------------------------
-{}================================================{}
-'''.format( green, 
-            blue, 
-            green, 
-            magenta, 
-            yellow,
-            cyan,
-            user,
-            magenta, 
-            green,
-            reset)
-	print(menu)
+	print('{}================================================{}'.format(green, reset))
+	print('               {}CAIXA DE ECONOMIAS{}            '.format(blue, reset))
+	print('{}================================================{}'.format(green, reset))
+	print('{}------------------------------------------------{}'.format(magenta,reset))
+	print(' {}Usuário: {}{}{}'.format(yellow, cyan, user, reset))
+	print('{}------------------------------------------------{}'.format(magenta,reset))
+	print('{}================================================{}'.format(green, reset))
+	print('')
 	rsp = str(getpass.getpass(' {}Entre com o password:\n\n {}~/{}Terminal{} $ '.format(blue, green, yellow, reset)))
 	if rsp == pswd_db:
 		os.system('python {}App_CLI.py {} {}'.format(path_main, user, pswd_db))
@@ -98,7 +59,6 @@ def menu_users_login(user):
 		os.system(os_cls)
 		print(' {}senha incorreta.{}'.format(red, reset))
 		time.sleep(0.5)	
-
 
 arg1 = ''
 arg2 = ''

@@ -2,13 +2,13 @@
 
 __author__ = 'Visto-Preto'
 
-import os, sqlite3, sys, time
+import os, sqlite3, sys, time, getpass
 from datetime import datetime
 from module.realsymbol import Real as rs
 from App import Control_DB
 from module import platform
 
-path_main, path_db, os_cls, red, green, yellow, blue, magenta, cyan, reset, delete = platform.platform()
+path_main, path_db, os_cls, red, green, yellow, blue, magenta, cyan, reset, cmd_del = platform.platform()
 
 user = sys.argv[1]
 passwd = sys.argv[2]
@@ -35,7 +35,7 @@ def delete():
     print('')
     rsp = str(getpass.getpass(' {}Entre com o password:\n\n {}~/{}Terminal{} $ '.format(blue, green, yellow, reset)))
     if rsp == pswd_db:
-        os.system('{} {}{}.db'.format(delete, path_db, user))
+        os.system('{} {}{}.db'.format(cmd_del, path_db, user))
         os.system(os_cls)
         print(' {}Conta excluida com sucesso.{}'.format(red, reset))
         time.sleep(0.5) 
