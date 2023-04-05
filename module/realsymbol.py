@@ -270,23 +270,14 @@ class Real():
         
         return Real.float_to_s(x)
 
+
     def del_caracter(x):
         c = ''
-
         for i in x:
-            if i == '.':
-                pass
-            elif i == ',':
-                pass
-            elif i == ' ':
-                pass
-            elif i == 'R':
-                pass
-            elif i == '$':
-                pass
-            else:
+            if i.isnumeric():
                 c += i
+            else:
+                pass
         if c[0] == '0':
-            c = c[1:]
-            
+            c = c[1:]  
         return  Real.float_to_s (c)

@@ -2,7 +2,7 @@
 
 __author__ = 'Visto-Preto'
 
-import os, sqlite3, sys
+import os, sqlite3, sys, time
 from datetime import datetime
 from module.realsymbol import Real as rs
 from App import Control_DB
