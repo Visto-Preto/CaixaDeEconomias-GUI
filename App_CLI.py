@@ -105,7 +105,7 @@ def saque():
         menu_conta()
     else:
         os.system(os_cls)
-        f_extrato(extrato)
+
 
 def deposito():
     def mov():
@@ -167,7 +167,6 @@ def deposito():
         menu_conta()
     else:
         os.system(os_cls)
-        f_extrato(extrato)
 
 def f_extrato(x):
     os.system(os_cls)
